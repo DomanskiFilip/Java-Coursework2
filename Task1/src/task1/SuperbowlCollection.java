@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.InputMismatchException; // InputMismatchException to handle invalid input
+import java.util.stream.Collectors;
 
 public class SuperbowlCollection {
     private List<Superbowl> superbowls;
@@ -88,9 +89,7 @@ public class SuperbowlCollection {
                 endYear = scanner.nextInt();
 
                 List<Superbowl> superbowlsInRange = getSuperbowlsByYearRange(startYear, endYear);
-                if (superbowlsInRange.isEmpty()) {
-                    // The message is already printed in getSuperbowlsByYearRange
-                } else {
+                if (!superbowlsInRange.isEmpty()) {
                     validInput = true;
                     System.out.println("----------------------------------------------------------------------");
                     System.out.println("| Year | Superbowl No. | Champions            | Runners-up           |");
@@ -105,5 +104,75 @@ public class SuperbowlCollection {
                 scanner.next(); // Clear the invalid input
             }
         }
+    }
+
+    // search by team
+    public void searchByTeam(String team) {
+        // Filter the Superbowl list to find the ones where the team is the winning or losing team
+        List<Superbowl> matchingSuperbowls = superbowls.stream()
+                .filter(s -> s.getWinningTeam().contains(team) || s.getLosingTeam().contains(team))
+                .sorted((s1, s2) -> Integer.compare(s1.getYear(), s2.getYear()))
+                .collect(Collectors.toList());
+
+        // If no Superbowl is found for the team, print a message and return
+        if (matchingSuperbowls.isEmpty()) {
+            System.out.println("No Superbowls found for the team " + team + ".");
+            return;
+        }
+
+        System.out.println("----------------------------------------------------------------------------");
+        System.out.println("| Team                 | No. appearances | Details                         |");
+        System.out.println("----------------------------------------------------------------------------");
+
+        // Determine if the team is the winning or losing team in the first Superbowl found
+        String teamName = matchingSuperbowls.get(0).getWinningTeam().contains(team) ? matchingSuperbowls.get(0).getWinningTeam() : matchingSuperbowls.get(0).getLosingTeam();
+        System.out.printf("| %-20s | %-15d ", teamName, matchingSuperbowls.size());
+
+        // Print the year, Superbowl number, and result (Winner/Runner-up) for each Superbowl
+        boolean first = true;
+        for (Superbowl superbowl : matchingSuperbowls) {
+            String result = superbowl.getWinningTeam().equals(teamName) ? "Winner" : "Runner-up";
+            if (first) {
+                System.out.printf("| %d (%-7s), %-14s  |\n", superbowl.getYear(), superbowl.getSuperbowlNumber(), result);
+                first = false;
+            } else {
+                System.out.printf("|                      |                 | %d (%-7s), %-15s |\n", superbowl.getYear(), superbowl.getSuperbowlNumber(), result);
+            }
+        }
+
+        System.out.println("----------------------------------------------------------------------------");
+    }
+
+    // search by state
+    public void searchByState(String state) {
+        // Filter the Superbowl list to find the ones in the specified state
+        List<Superbowl> matchingSuperbowls = superbowls.stream()
+                .filter(s -> s.getState().equalsIgnoreCase(state))
+                .sorted((s1, s2) -> Integer.compare(s1.getYear(), s2.getYear()))
+                .collect(Collectors.toList());
+
+        // If no Superbowl is found in the state, print a message and return
+        if (matchingSuperbowls.isEmpty()) {
+            System.out.println("No Superbowls found in the state " + state + ".");
+            return;
+        }
+
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("| State      | Superbowl     | City & Stadium                       |");
+        System.out.println("---------------------------------------------------------------------");
+
+        // Print the state, Superbowl number, city, and stadium for each Superbowl
+        System.out.printf("| %-10s |", state);
+        boolean first = true;
+        for (Superbowl superbowl : matchingSuperbowls) {
+            if(first){
+                System.out.printf(" %-6s (%d) | %-13s, %-21s |\n", superbowl.getSuperbowlNumber(), superbowl.getYear(), superbowl.getCity(), superbowl.getStadium());
+                first = false;
+            } else {
+                System.out.printf("|            | %-6s (%d) | %-13s, %-21s |\n", superbowl.getSuperbowlNumber(), superbowl.getYear(), superbowl.getCity(), superbowl.getStadium());
+            }
+        }
+
+        System.out.println("---------------------------------------------------------------------");
     }
 }    

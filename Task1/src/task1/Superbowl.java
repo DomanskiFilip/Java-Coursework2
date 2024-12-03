@@ -27,6 +27,7 @@ public class Superbowl {
         this.state = state;
     }
 
+    // individual get methods:
     public int getYear() {
         return year;
     }
@@ -67,25 +68,13 @@ public class Superbowl {
         return state;
     }
 
+    // overrideing toString to work acording to specifications
     @Override
     public String toString() {
         return String.format("| %-4d | %-13s | %-20s | %-20s |", year, superbowlNumber, winningTeam, losingTeam);
     }
-
-    public String toDetailedString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("------------------------------------------------------------------------------------------\n");
-        sb.append("|                                                                                        |\n");
-        sb.append(String.format("|                                          Superbowl %-4s                                |\n", superbowlNumber));
-        sb.append(String.format("|                           Venue: %-1s in %-1s, %-28s |\n", stadium, city, state));
-        sb.append(String.format("|          The %-1s beat the %-1s by %-1d points to %-3d points      |\n", winningTeam, losingTeam, winningPoints, losingPoints));
-        sb.append(String.format("|                     The most valuable player award went to %-27s |\n", mvp));
-        sb.append("|                                                                                        |\n");
-        sb.append("------------------------------------------------------------------------------------------");
-        return sb.toString();
-    }
-
-    public static void printSuperbowlTableHeader() {
+    // two methods makeing the header and footer of the table
+     public static void printSuperbowlTableHeader() {
         System.out.println("----------------------------------------------------------------------");
         System.out.println("| Year | Superbowl No. | Champions            | Runners-up           |");
         System.out.println("----------------------------------------------------------------------");
@@ -94,4 +83,20 @@ public class Superbowl {
     public static void printSuperbowlTableFooter() {
         System.out.println("----------------------------------------------------------------------");
     }
+    
+    // method to format and display information when useing "select"
+    public String toDetailedString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("--------------------------------------------------------------------------------------------------\n");
+        sb.append("|                                                                                                |\n");
+        sb.append(String.format("|                                          Superbowl %-7s                                     |\n", superbowlNumber));
+        sb.append(String.format("|                           Venue: %-21s in %-13s, %-10s            |\n", stadium, city, state));
+        sb.append(String.format("|          The %-20s beat the %-20s by %-2d points to %-2d points      |\n", winningTeam, losingTeam, winningPoints, losingPoints));
+        sb.append(String.format("|                     The most valuable player award went to %-27s         |\n", mvp));
+        sb.append("|                                                                                                |\n");
+        sb.append("--------------------------------------------------------------------------------------------------");
+        return sb.toString();
+    }
+
+   
 }
