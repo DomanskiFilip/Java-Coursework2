@@ -132,6 +132,7 @@ public class SuperbowlCollection {
         boolean first = true;
         for (Superbowl superbowl : matchingSuperbowls) {
             String result = superbowl.getWinningTeam().equals(teamName) ? "Winner" : "Runner-up";
+            // print first line of data differently than the rest to accommodate for the data already in the first line
             if (first) {
                 System.out.printf("| %d (%-7s), %-14s  |\n", superbowl.getYear(), superbowl.getSuperbowlNumber(), result);
                 first = false;
@@ -165,6 +166,7 @@ public class SuperbowlCollection {
         System.out.printf("| %-10s |", state);
         boolean first = true;
         for (Superbowl superbowl : matchingSuperbowls) {
+            // print first line of data differently than the rest to accommodate for the data already in the first line
             if(first){
                 System.out.printf(" %-6s (%d) | %-13s, %-21s |\n", superbowl.getSuperbowlNumber(), superbowl.getYear(), superbowl.getCity(), superbowl.getStadium());
                 first = false;
