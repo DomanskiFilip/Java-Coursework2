@@ -1,20 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package task2;
 
-/**
- *
- * @author Strateg
- */
+import java.util.Arrays;
+
 public class Task2 {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Cabin suite = new Suite(101, true);
+        Cabin standardCabin = new StandardCabin(102, false);
+        Ship ship = new Ship(Arrays.asList(suite, standardCabin));
+        Cruise cruiseToBahamas = new Cruise(ship);
+
+        Port port = new Port("Bahamas");
+        Excursion excursionTobahamas = new Excursion(port, "Monday");
+        cruiseToBahamas.addExcursion(excursionTobahamas);
+
+        Passenger passenger1 = new Passenger("John Doe", suite, cruiseToBahamas, excursionTobahamas);
+        cruiseToBahamas.addPassenger(passenger1);
+        passenger1.joinExcursion(excursionTobahamas);
+
+        Passenger passenger2 = new Passenger("Jane Smith", standardCabin, cruiseToBahamas, excursionTobahamas);
+        cruiseToBahamas.addPassenger(passenger2);
+        passenger2.joinExcursion(excursionTobahamas);
+
+        System.out.println("List of passengers on the cruise:");
+        for (Passenger passenger : cruiseToBahamas.getPassengers()) {
+            System.out.println("Passenger name: " + passenger.getName());
+            Cabin cabin = passenger.getCabin();
+            System.out.println(cabin.isSuite());
+            System.out.println("Has balcony?: " + cabin.hasBalcony());
+            System.out.println("Has sea view?: " + cabin.hasSeaView());
+        }
     }
-    
 }
