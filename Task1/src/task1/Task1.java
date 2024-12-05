@@ -24,33 +24,40 @@ public class Task1 {
             System.out.println("Exit..................0");
             System.out.println("-----------------------");
             System.out.print("Enter choice: > ");
-            choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1:
-                   // List Superbowls within a year range
-                   collection.printSuperbowlsTable();
-                   break;
-                case 2:
-                    // Select a Superbowl by year
-                    System.out.print("Enter championship year > ");
-                    int year = scanner.nextInt();
-                    Superbowl superbowl = collection.getSuperbowlByYear(year);
-                    if (superbowl != null) {
-                        System.out.println(superbowl.toString());
-                    } else {
-                        System.out.println("No Superbowl found for the year " + year + ". Please try again.");
-                    }
-                    break;
-                case 3:
-                    // Search for a Superbowl
-                    searchSuperbowls(collection, scanner);
-                    break;
-                case 0:
-                    System.out.println("Exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+            
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // consume newline
+                switch (choice) {
+                    case 1:
+                       // List Superbowls within a year range
+                       collection.printSuperbowlsTable();
+                       break;
+                    case 2:
+                        // Select a Superbowl by year
+                        System.out.print("Enter championship year > ");
+                        int year = scanner.nextInt();
+                        Superbowl superbowl = collection.getSuperbowlByYear(year);
+                        if (superbowl != null) {
+                            System.out.println(superbowl.toString());
+                        } else {
+                            System.out.println("No Superbowl found for the year " + year + ". Please try again.");
+                        }
+                        break;
+                    case 3:
+                        // Search for a Superbowl
+                        searchSuperbowls(collection, scanner);
+                        break;
+                    case 0:
+                        System.out.println("Exiting...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // consume the invalid input
+                choice = -1; // set to an invalid choice to continue the loop
             }
         } while (choice != 0);
 

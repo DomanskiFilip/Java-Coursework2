@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
+import java.util.InputMismatchException; // InputMismatchException to handle invalid input
 
 
 public class Task2 {
@@ -33,10 +35,6 @@ public class Task2 {
         Cabin suite4 = new Suite(104, false);
         Cabin standardCabin3 = new StandardCabin(203, true);
         Cabin standardCabin4 = new StandardCabin(204, false);
-        Cabin suite5 = new Suite(105, true);
-        Cabin suite6 = new Suite(106, false);
-        Cabin standardCabin5 = new StandardCabin(205, true);
-        Cabin standardCabin6 = new StandardCabin(206, false);
 
         // Add cabins to ships
         for (Cabin cabin : Arrays.asList(suite1, suite2, standardCabin1, standardCabin2, suite3, suite4, standardCabin3, standardCabin4)) {
@@ -59,9 +57,12 @@ public class Task2 {
         }
 
         // Create excursions
-        Excursion excursion1 = new Excursion(Barcelona, "Monday");
-        Excursion excursion2 = new Excursion(Rome, "Wednesday");
-        Excursion excursion3 = new Excursion(Athens, "Friday");
+        Excursion excursion1 = new Excursion(Barcelona, "Monday", 10);
+        Excursion excursion2 = new Excursion(Rome, "Wednesday", 6);
+        Excursion excursion3 = new Excursion(Athens, "Friday", 8);
+        Excursion excursion4 = new Excursion(Barcelona, "Tuesday", 12);
+        Excursion excursion5 = new Excursion(Barcelona, "Thursday", 12);
+        
 
         // Create cruises
         Cruise cruise1 = new Cruise(ship1);
@@ -71,7 +72,7 @@ public class Task2 {
         Cruise cruise5 = new Cruise(ship5);
         Cruise cruise6 = new Cruise(ship6);
 
-        // Create passengers
+        // Create passengers and assign them to cruses and cabins
         List<Passenger> passengers = new ArrayList<>();
         int passengerCount = 1;
 
@@ -83,35 +84,86 @@ public class Task2 {
         Cruise[] cruises = {cruise1, cruise2, cruise3, cruise4, cruise5, cruise6};
         Cabin[] cabins = {suite1, suite2, standardCabin1, standardCabin2, suite3, suite4, standardCabin3, standardCabin4};
 
-        for (Cruise cruise : cruises) {
-            for (Cabin cabin : cabins) {
-                int maxPassengers = cabin instanceof Suite ? 4 : 6;
-                for (int i = 0; i < maxPassengers && passengerCount <= 100; i++) {
-                    String firstName = firstNames[random.nextInt(firstNames.length)];
-                    String lastName = lastNames[random.nextInt(lastNames.length)];
-                    String fullName = firstName + " " + lastName;
-                    Passenger passenger = new Passenger(fullName, cabin, cruise);
-                    cruise.addPassenger(passenger);
-                    passengers.add(passenger);
-                    passengerCount++;
-                }
+        int cruiseIndex = 0;
+        for (Cabin cabin : cabins) {
+            int maxPassengers = cabin instanceof Suite ? 4 : 6;
+            for (int i = 0; i < maxPassengers && passengerCount <= 100; i++) {
+                String firstName = firstNames[random.nextInt(firstNames.length)];
+                String lastName = lastNames[random.nextInt(lastNames.length)];
+                String fullName = firstName + " " + lastName;
+                Cruise cruise = cruises[cruiseIndex];
+                Passenger passenger = new Passenger(fullName, cabin, cruise);
+                cruise.addPassenger(passenger);
+                passengers.add(passenger);
+                passengerCount++;
+                cruiseIndex = (cruiseIndex + 1) % cruises.length; // Move to the next cruise
             }
         }
-
-
 
         // Add excursions to cruises
         cruise1.addExcursion(excursion1);
         cruise1.addExcursion(excursion2);
         cruise2.addExcursion(excursion3);
+        cruise3.addExcursion(excursion4);
+        cruise3.addExcursion(excursion1);
+        cruise4.addExcursion(excursion2);
+        cruise4.addExcursion(excursion5);
+        cruise5.addExcursion(excursion3);
+        cruise6.addExcursion(excursion2);
+       
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        // main loop for chooseing the actions
+        do {
+            
+            System.out.println("--------------------------");
+            System.out.println("Cruises:");
+            System.out.println("--------------------------");
+            System.out.println("Mediterranean Explorer...1");
+            System.out.println("Adriatic Adventure.......2");
+            System.out.println("Blue Ocean...............3");
+            System.out.println("Markus Aurelius..........4");
+            System.out.println("Alexander the Great......5");
+            System.out.println("Manta Ray................6");
+            System.out.println("Exit.....................0");
+            System.out.println("--------------------------");
+            System.out.print("Enter choice: > ");
 
+           try {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // consume newline
+                switch (choice) {
+                    case 1:
+                     
+                       break;
+                    case 2:
+                        
+                        break;
+                    case 3:
+                       
+                        break;
+                    case 4:
 
-        // Print out the data
-        System.out.println("Cruise 1:");
-        System.out.println(cruise1);
-        System.out.println("Cruise 2:");
-        System.out.println(cruise2);
-        
-        
-    }   
+                        break;
+                    case 5:
+
+                        break;
+                    case 6:
+
+                        break;
+                    case 0:
+                        System.out.println("Exiting...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // consume the invalid input
+                choice = -1; // set to an invalid choice to continue the loop
+            }
+        } while (choice != 0);
+
+        scanner.close();
+    }
 }
