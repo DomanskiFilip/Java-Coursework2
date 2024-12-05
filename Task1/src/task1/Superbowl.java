@@ -68,24 +68,14 @@ public class Superbowl {
         return state;
     }
 
-    // overrideing toString to work acording to specifications
-    @Override
-    public String toString() {
+    // function used to display rows with information 
+    public String tableRow() {
         return String.format("| %-4d | %-13s | %-20s | %-20s |", year, superbowlNumber, winningTeam, losingTeam);
     }
-    // two methods makeing the header and footer of the table
-     public static void printSuperbowlTableHeader() {
-        System.out.println("----------------------------------------------------------------------");
-        System.out.println("| Year | Superbowl No. | Champions            | Runners-up           |");
-        System.out.println("----------------------------------------------------------------------");
-    }
 
-    public static void printSuperbowlTableFooter() {
-        System.out.println("----------------------------------------------------------------------");
-    }
-    
-    // method to format and display information when useing "select"
-    public String toDetailedString() {
+       // overrideing toString to work acording to specifications
+    @Override
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("--------------------------------------------------------------------------------------------------\n");
         sb.append("|                                                                                                |\n");
