@@ -1,7 +1,7 @@
 package task2;
 
 public class Port {
-    private String name;
+    private final String name;
 
     public Port(String name) {
         this.name = name;

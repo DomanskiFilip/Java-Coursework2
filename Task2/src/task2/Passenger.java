@@ -9,30 +9,39 @@ public class Passenger {
     private Cruise cruise;
     private List<Excursion> excursions;
 
-    public Passenger(String name, Cabin cabin, Cruise cruise, Excursion excursions) {
+    public Passenger(String name, Cabin cabin, Cruise cruise) {
         this.name = name;
         this.cabin = cabin;
         this.cruise = cruise;
         this.excursions = new ArrayList<>();
     }
 
-    public void joinExcursion(Excursion excursion) {
-        excursions.add(excursion);
-    }
-
+    // get name of the passenger
     public String getName() {
         return name;
     }
 
+    // get cabin of the passenger
     public Cabin getCabin() {
         return cabin;
     }
 
+    // get cruise of the passenger
     public Cruise getCruise() {
         return cruise;
     }
 
+    // get all the excursions of the passenger
     public List<Excursion> getExcursions() {
         return excursions;
+    }
+
+    // join excursion if available
+    public void joinExcursion(Excursion excursion) {
+        if (cruise.hasExcursion(excursion)) {
+            excursions.add(excursion);
+        } else {
+            System.out.println("Excursion not available in the cruise.");
+        }
     }
 }

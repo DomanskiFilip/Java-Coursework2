@@ -8,6 +8,7 @@ public class StandardCabin extends Cabin {
         this.seaView = seaView;
     }
 
+    // Overriding abstract methods from Cabin
     @Override
     public String isSuite() {
         return "This is a cabin";

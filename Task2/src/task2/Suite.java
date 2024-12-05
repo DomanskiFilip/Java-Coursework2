@@ -8,6 +8,7 @@ public class Suite extends Cabin {
         this.balcony = balcony;
     }
 
+    // Overriding abstract methods from Cabin
     @Override
     public String isSuite() {
         return "This is a suite";
