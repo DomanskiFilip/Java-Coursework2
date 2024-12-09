@@ -20,4 +20,9 @@ public class Excursion {
     public String getDayOfWeek() {
         return dayOfWeek;
     }
+
+    // get space
+    public int getSpace() {
+        return space;
+    }
 }

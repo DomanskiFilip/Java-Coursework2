@@ -26,6 +26,11 @@ public class Passenger {
         return cabin;
     }
 
+    // set cabin of the passenger
+    public void setCabin(Cabin cabin) {
+        this.cabin = cabin;
+    }
+
     // get cruise of the passenger
     public Cruise getCruise() {
         return cruise;

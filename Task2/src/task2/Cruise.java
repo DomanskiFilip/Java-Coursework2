@@ -57,9 +57,10 @@ public class Cruise {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Cruise on ship: ").append(ship.getName()).append("\n");
+        sb.append("Number of passengers: ").append(passengers.size()).append("\n");
         sb.append("Cabins: \n");
-        for (Cabin cabin : ship.getCabins()){
-             sb.append(" - ").append(cabin).append("\n");
+        for (Cabin cabin : ship.getCabins()) {
+            sb.append(" - ").append(cabin).append("\n");
         }
         sb.append("Passengers:\n");
         for (Passenger passenger : passengers) {
@@ -67,7 +68,10 @@ public class Cruise {
         }
         sb.append("Excursions:\n");
         for (Excursion excursion : excursions) {
-            sb.append(" - ").append(excursion.getPort().getName()).append(" on ").append(excursion.getDayOfWeek()).append("\n");
+            int availableSpaces = excursion.getSpace() - (int) passengers.stream()
+                    .filter(p -> p.getExcursions().contains(excursion)).count();
+            String status = availableSpaces > 0 ? availableSpaces + " spaces available" : "Fully booked";
+            sb.append(" - ").append(excursion.getPort().getName()).append(" on ").append(excursion.getDayOfWeek()).append(": ").append(status).append("\n");
         }
         return sb.toString();
     }
